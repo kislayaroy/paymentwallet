@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import com.capg.wallet.transactionmgt.entities.WalletTransaction;
+import com.capg.wallet.usermgt.entities.WalletAccount;
 
 public class WalletTransactionDaoImpl implements IWalletTransactionDao {
 	static Map<Integer,WalletTransaction> transactionStore=new HashMap<>();
