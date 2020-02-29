@@ -1,7 +1,7 @@
 package com.capg.wallet.usermgt.util;
 
 import com.capg.wallet.usermgt.dao.WalletUserDaoImpl;
-import com.capg.wallet.usermgt.entities.WalletUser;
+import com.capg.wallet.usermgt.entities.*;
 import com.capg.wallet.usermgt.exceptions.*;
 
 public class UserValidation {

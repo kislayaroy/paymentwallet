@@ -8,7 +8,7 @@ public class WalletAccountDaoImpl implements IWalletAccountDao{
 	Map<Integer, WalletAccount> store = new HashMap<>();
 	
 	@Override
-	public WalletAccount addAmount(double balance,int accountId)
+	public WalletAccount addAmount(double balance,WalletAccount account)
 	{		
 		WalletAccount w=store.get(accountId);
 		w.accountBalance=w.getAccountBalance()+ balance;
@@ -29,6 +29,13 @@ public class WalletAccountDaoImpl implements IWalletAccountDao{
 			System.out.println(w.accountBalance+" has balance= "+w.getAccountBalance());
 		}
 	}*/
+	@Override
+	public WalletAccount dedectAmount(double balance,int accountId)
+	{
+		WalletAccount w=store.get(accountId);
+		w.accountBalance=w.getAccountBalance()-balance;
+		return w;
+	}
 	
 	@Override
 	public void transferfund(double balance,int senderId,int receiverId) 
