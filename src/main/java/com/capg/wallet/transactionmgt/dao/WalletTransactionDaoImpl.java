@@ -7,47 +7,52 @@ import com.capg.wallet.transactionmgt.entities.WalletTransaction;
 import com.capg.wallet.usermgt.entities.WalletAccount;
 
 public class WalletTransactionDaoImpl implements IWalletTransactionDao {
-	static Map<Integer,WalletTransaction> transactionStore=new HashMap<>();
+	public static Map<Integer,WalletTransaction> transactionStore=new HashMap<>();
 	private int generateId;
+
+	//method for generation of transaction id
 	public int generateId() {
 		generateId++;
 		return generateId;
 	}
-	private LocalDateTime dateoftransaction;
 	
+	//method to store the details of credited amount
 	@Override
 	public WalletTransaction addAmount(WalletAccount  account, double amount) {
+			LocalDateTime dateTime=LocalDateTime.now();
 			String desc=amount+" added";			
 			int transactionId=generateId();
-			WalletTransaction transaction=new WalletTransaction();
-			transaction.setTransactionid(transactionId);
-			transaction.setDescription(desc);
-			transaction.setDateoftransaction(dateoftransaction.now());
-			transaction.setAmount(amount);
-	        transaction.setAccountbalance(account.getAccountBalance());		
-	        transactionStore.put(transactionId, transaction);
-	        return transaction;
-			
+			WalletTransaction transactions=new WalletTransaction();
+			transactions.setTransactionid(transactionId);
+			transactions.setDescription(desc);
+			transactions.setDateoftransaction(dateTime);
+			transactions.setAmount(amount);
+			transactions.setAccountbalance(account.getAccountBalance());
+	        transactionStore.put(transactionId, transactions);
+	        return transactions;        
 	}
 	
+	//method to store the details of deducted amount
 	@Override
 	public WalletTransaction deductAmount(WalletAccount account, double amount) {
+		LocalDateTime dateTime=LocalDateTime.now();
 		String desc=amount+" deducted";	
-		WalletTransaction transaction=new WalletTransaction();
+		WalletTransaction transactions=new WalletTransaction();
 		int transactionId=generateId();
-		transaction.setTransactionid(transactionId);
-		transaction.setDescription(desc);
-		transaction.setDateoftransaction(dateoftransaction.now());
-		transaction.setAmount(amount);
-		transaction.setAccountbalance(account.getAccountBalance());
-		transactionStore.put(transactionId, transaction);
-		return transaction;
+		transactions.setTransactionid(transactionId);
+		transactions.setDescription(desc);
+		transactions.setDateoftransaction(dateTime);
+		transactions.setAmount(amount);
+		transactions.setAccountbalance(account.getAccountBalance());
+		transactionStore.put(transactionId, transactions);
+		return transactions;
 	}
 	
-
+	//method to store the information of transaction from the user account 
 	@Override
 	public void tranferAmount(WalletAccount account_from, WalletAccount account_to,double amount) {
 		addAmount(account_to,amount);
 		deductAmount(account_from,amount);
+		
 	}
 }
