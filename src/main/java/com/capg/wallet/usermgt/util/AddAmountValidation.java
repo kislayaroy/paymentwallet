@@ -6,7 +6,7 @@ import com.capg.wallet.usermgt.exceptions.*;
 
 public class AddAmountValidation {
 
-	public WalletAccount addAmount(double balance,int accountId)
+	public static boolean checkAmount(double balance)
 	{		
 		
 		WalletAccountDaoImpl obj=new WalletAccountDaoImpl();
@@ -22,6 +22,6 @@ public class AddAmountValidation {
 			throw exception ;
 		}*/
 		
-		return obj.addAmount(balance, accountId);
+		return true;
 	}
 }

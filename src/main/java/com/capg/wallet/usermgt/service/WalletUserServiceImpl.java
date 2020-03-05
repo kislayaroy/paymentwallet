@@ -4,7 +4,7 @@ import com.capg.wallet.usermgt.dao.IWalletUserDao;
 import com.capg.wallet.usermgt.entities.WalletUser;
 
 public class WalletUserServiceImpl implements IWalletUserService{
-	IWalletUserDao daoUser;
+	/*IWalletUserDao daoUser;
 	
 	public WalletUserServiceImpl(IWalletUserDao daoUser)
 	{
@@ -29,6 +29,6 @@ public class WalletUserServiceImpl implements IWalletUserService{
 		return w;
 	}
 	
-	
+	*/
 
 }

@@ -1,10 +1,15 @@
 package com.capg.wallet.usermgt.dao;
 
 import com.capg.wallet.usermgt.entities.WalletAccount;
+import com.capg.wallet.usermgt.entities.WalletUser;
 
 public interface IWalletAccountDao {
 	
-	WalletAccount addAmount(double balance,int accountId);
-	WalletAccount dedectAmount(double balance,int accountId);
-	void transferfund(double balance,int senderId,int receiverId);
+	void addAccount(WalletUser w);
+	void removeAccount(int accountId);	
+	WalletAccount findwalletId(int accountId);	
+	WalletAccount addAmount(WalletUser user, double amount);
+	WalletAccount deductAmount(WalletUser user, double amount);
+	void transferfund(WalletUser sender,WalletUser receiver,double amount);
+
 }

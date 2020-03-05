@@ -32,7 +32,7 @@ public class UserValidation {
 		}
 		return true;
 		}
-	
+	/*
 	public boolean checkAccountId(int accountId) {
 		WalletUserDaoImpl obj=new WalletUserDaoImpl();
 		WalletUser w1= obj.findwalletId(accountId);
@@ -42,5 +42,5 @@ public class UserValidation {
 		else
 			return false;
 		}
-	
+	*/
 }

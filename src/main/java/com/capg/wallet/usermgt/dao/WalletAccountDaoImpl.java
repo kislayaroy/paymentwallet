@@ -1,49 +1,66 @@
 package com.capg.wallet.usermgt.dao;
+
 import com.capg.wallet.usermgt.entities.*;
 import java.util.*;
 import com.capg.wallet.usermgt.exceptions.*;
 
-public class WalletAccountDaoImpl implements IWalletAccountDao{
+public class WalletAccountDaoImpl implements IWalletAccountDao {
 
-	Map<Integer, WalletAccount> store = new HashMap<>();
-	
-	@Override
-	public WalletAccount addAmount(double balance,WalletAccount account)
-	{		
-		WalletAccount w=store.get(accountId);
-		w.accountBalance=w.getAccountBalance()+ balance;
-		return w;
+	public static Map<Integer, UserAndAccount> store = new HashMap<>();
+
+	private int generatedId;
+
+	public int generateId() {
+		return ++generatedId;
 	}
-	
-	/*
-	public void displayAmount(int accountId)
-	{
-		if(!store.containsKey(accountId))
-		{
-			AccountNotFoundException exception=new AccountNotFoundException("Account not found");
-			throw exception ;
-		}
-		else
-		{
-			WalletAccount w=store.get(accountId);
-			System.out.println(w.accountBalance+" has balance= "+w.getAccountBalance());
-		}
-	}*/
+
 	@Override
-	public WalletAccount dedectAmount(double balance,int accountId)
-	{
-		WalletAccount w=store.get(accountId);
-		w.accountBalance=w.getAccountBalance()-balance;
-		return w;
+	public void addAccount(WalletUser user) {
+		int accountId = generateId();
+		WalletAccount account = new WalletAccount();
+		account.setAccountId(accountId);
+		UserAndAccount userAccount = new UserAndAccount(user, account);
+		store.put(user.getUserId(), userAccount);
 	}
-	
+
 	@Override
-	public void transferfund(double balance,int senderId,int receiverId) 
-	{
+	public void removeAccount(int userId) {
+		store.remove(userId);
+	}
+
+	@Override
+	public WalletAccount findwalletId(int userId) {
+		UserAndAccount userAccount = store.get(userId);
+		WalletAccount account=userAccount.getAccount();
+		return account;
+	}
+
+	@Override
+	public WalletAccount addAmount(WalletUser user, double amount) {
 		
-		WalletAccount w1=store.get(senderId);
-		WalletAccount w2=store.get(receiverId);
-		w2.accountBalance=w2.accountBalance+balance;
-		w1.accountBalance=w1.accountBalance-balance;
+		int userId=user.getUserId();
+		UserAndAccount userAccount= store.get(userId);
+		WalletAccount account=userAccount.getAccount();
+		double balance=account.getAccountBalance();
+		double newBalance=balance+amount;
+		account.setAccountBalance(newBalance);
+		return account;
+	}
+
+	@Override
+	public WalletAccount deductAmount(WalletUser user, double amount) {
+		int userId=user.getUserId();
+		UserAndAccount userAccount= store.get(userId);
+		WalletAccount account=userAccount.getAccount();
+		double balance=account.getAccountBalance();
+		double newBalance=balance-amount;
+		account.setAccountBalance(newBalance);
+		return account;
+	}
+
+	@Override
+	public void transferfund(WalletUser sender,WalletUser receiver,double amount) {
+		addAmount(receiver,amount);
+		deductAmount(sender,amount);
 	}
 }
